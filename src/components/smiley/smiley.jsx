@@ -28,7 +28,7 @@ function Smiley() {
   );
 
   // Function to navigate to emoji detail page
-  const goToEmojiDetail = (emoji) => {
+  const goToEmojiDetail = (emoji) => {  
     // navigate(`/EmojiDetail`);
     navigate(`/emoji/${emoji.name}`, { state: { url: emoji.url } });
   };

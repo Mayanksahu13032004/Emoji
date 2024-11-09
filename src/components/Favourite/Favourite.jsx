@@ -1,11 +1,28 @@
-import React from 'react'
+// FavoriteComponent.js
+import React from 'react';
+// import { useFavorites } from './FavoritesContext';
+import { useFavorites } from '../FavoritesContext/FavoritesContext';
 
-function Favourite() {
+function FavoriteComponent() {
+  const { favorites } = useFavorites();
+
   return (
     <div>
-      <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde quia earum consequuntur eaque. Temporibus sint repellendus totam, laudantium suscipit cumque qui, ipsa exercitationem autem impedit commodi rerum dolor facere recusandae quaerat minus id dolorum enim labore, laborum repudiandae est aliquam minima. Quo veritatis itaque illum? Ea velit, fugiat voluptatem nisi laudantium eligendi tenetur ex aspernatur libero saepe neque quis. Provident explicabo veritatis ipsa est numquam perspiciatis odit omnis rerum quibusdam saepe quaerat illo tenetur eum, officia molestias beatae, ipsam nemo mollitia cum. Consectetur iusto non quis inventore cupiditate expedita, ipsum illum asperiores omnis ipsam dolor, architecto ea dolores officia quaerat.</h1>
+      <h2 className="text-2xl font-bold">Favorites</h2>
+      {favorites.length > 0 ? (
+        <ul>
+          {favorites.map((emoji, index) => (
+            <li key={index} className="flex py-2">
+              <img src={emoji.url} alt={emoji.name} width="32" height="32" />
+              <p className="ml-4">{emoji.name}</p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No favorite emojis</p>
+      )}
     </div>
-  )
+  );
 }
 
-export default Favourite
+export default FavoriteComponent;

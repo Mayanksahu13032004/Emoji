@@ -18,7 +18,10 @@ export default function Header() {
                                         `block  duration-200 ${isActive ? "text-black" : "text-gray-700"} border-b border-gray-100 hover:bg-gray-50`
                                     }
                                 >
-                                    Smiley & Emotions
+                              
+
+                                   😄
+                                   Smiley & Emotions
                                 </NavLink>
                             </li>
                             <li>
@@ -28,7 +31,8 @@ export default function Header() {
                                         `block  duration-200 ${isActive ? "text-black" : "text-gray-700"} border-b border-gray-100 hover:bg-gray-50`
                                     }
                                 >
-                                    People & Body
+                                🙋‍♂️
+                                People & Body
                                 </NavLink>
                             </li>
                             <li>
@@ -38,7 +42,8 @@ export default function Header() {
                                         `block  duration-200 ${isActive ? "text-black" : "text-gray-700"} border-b border-gray-100 hover:bg-gray-50`
                                     }
                                 >
-                                    Animal & Nature
+                             🍁
+                             Animal & Nature
                                 </NavLink>
                             </li>
                             <li>
@@ -48,7 +53,8 @@ export default function Header() {
                                         `block  duration-200 ${isActive ? "text-black" : "text-gray-700"} border-b border-gray-100 hover:bg-gray-50`
                                     }
                                 >
-                                    Food & Drink
+                                   🍲
+                                   Food & Drink
                                 </NavLink>
                             </li>
                             <li>
@@ -58,7 +64,8 @@ export default function Header() {
                                         `block  duration-200 ${isActive ? "text-black" : "text-gray-700"} border-b border-gray-100 hover:bg-gray-50`
                                     }
                                 >
-                                    Activities
+                              ⚽
+                              Activities
                                 </NavLink>
                             </li>
                             <li>
@@ -68,7 +75,8 @@ export default function Header() {
                                         `block  duration-200 ${isActive ? "text-black" : "text-gray-700"} border-b border-gray-100 hover:bg-gray-50`
                                     }
                                 >
-                                    Travel & Places
+                       🛩
+                       Travel & Places
                                 </NavLink>
                             </li>
                             <li>
@@ -78,7 +86,8 @@ export default function Header() {
                                         `block  duration-200 ${isActive ? "text-black" : "text-gray-700"} border-b border-gray-100 hover:bg-gray-50`
                                     }
                                 >
-                                    Objects
+                         🧰
+                         Objects
                                 </NavLink>
                             </li>
                             <li>
@@ -88,7 +97,8 @@ export default function Header() {
                                         `block duration-200 ${isActive ? "text-black" : "text-gray-700"} border-b border-gray-100 hover:bg-gray-50`
                                     }
                                 >
-                                    Symbols
+                       ⚠
+                       Symbols
                                 </NavLink>
                             </li>
                             <li>
@@ -98,7 +108,9 @@ export default function Header() {
                                         `block  duration-200 ${isActive ? "text-black" : "text-gray-700"} border-b border-gray-100 hover:bg-gray-50`
                                     }
                                 >
-                                    Flags
+                            🚩
+                            Flags
+                            <hr />
                                 </NavLink>
                             </li>
                             <li>
@@ -108,7 +120,8 @@ export default function Header() {
                                         `block  font-bold text-2xl duration-200 ${isActive ? "text-black" : "text-gray-700"} border-b border-gray-100 hover:bg-gray-50`
                                     }
                                 >
-                                    Favourite
+                                 Favourite
+
                                 </NavLink>
                             </li>
                             <li>
@@ -130,3 +143,5 @@ export default function Header() {
         </div>
     );
 }
+
+

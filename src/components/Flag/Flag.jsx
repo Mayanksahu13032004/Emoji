@@ -1,11 +1,66 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Flag() {
+  const [emojis, setEmojis] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios.get('https://api.github.com/emojis')
+      .then(response => {
+        const emojisArray = Object.entries(response.data).map(([name, url]) => ({
+          name,
+          url
+        }));
+        console.log(response.data);
+        
+        setEmojis(emojisArray);
+      })
+      .catch(error => console.error(error));
+  }, []);
+
+  // Filter emojis based on search term
+  const filteredEmojis = emojis.filter(emoji => 
+    emoji.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // Function to navigate to emoji detail page
+  const goToEmojiDetail = (emoji) => {  
+    // navigate(`/EmojiDetail`);
+    navigate(`/emoji/${emoji.name}`, { state: { url: emoji.url } });
+  };
+
   return (
     <div>
-      <h1 className=''>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem consectetur aliquid saepe doloribus quo assumenda accusamus dolore libero, velit, id quis, ipsa iusto! Recusandae, cumque! Aliquid in, accusamus nihil nobis rem laudantium, nesciunt debitis eum impedit iste perspiciatis obcaecati architecto ducimus, distinctio ratione totam aperiam ipsam qui excepturi perferendis quibusdam adipisci? Fugit maiores quia corporis at ea incidunt tenetur officia, reiciendis nesciunt veritatis, modi animi qui natus nihil labore inventore voluptatem impedit neque delectus odio magni architecto facilis asperiores laborum? Dolor unde dolores ipsam sed velit eos, illo ratione expedita placeat id in saepe laborum neque voluptatem possimus, recusandae vitae atque cupiditate consectetur, rem magni temporibus. Saepe odio, asperiores fugit ipsam fugiat ex illo enim voluptate nesciunt ratione omnis adipisci a distinctio tenetur molestias sint cum sit? Quibusdam sequi porro voluptates perferendis vero id explicabo expedita! Maxime, recusandae, optio iste ratione nihil velit officiis eligendi inventore vel, assumenda tempore iure sequi beatae porro rem saepe voluptatem corrupti maiores quis voluptatibus nisi. Iste at excepturi quo explicabo quibusdam. In illum earum itaque magnam ab optio reprehenderit eaque inventore doloremque sit magni saepe perspiciatis, et repellendus repudiandae fuga quam ea non, esse impedit porro mollitia facere id exercitationem. Expedita, neque nam repellendus quibusdam fugiat impedit deserunt. Ex, et. Praesentium tempore cumque illum quod nisi commodi eius veritatis voluptatem, esse, dolore enim magnam officiis, fugiat aliquid. Distinctio error magni aut molestiae, ea et. Nostrum qui, expedita inventore animi reiciendis fuga iste, sint assumenda, maiores sequi perferendis saepe aperiam deserunt dolore debitis a velit ratione hic nemo quam. Modi dolore earum veniam id sapiente. Soluta neque nesciunt distinctio laudantium officiis, commodi odit laborum reiciendis deleniti ratione! Eum deserunt vero ab sequi corporis alias nulla et quos, ad molestias dolorem, esse voluptates quam explicabo iure minus assumenda. Vel, quasi voluptatum vero et quisquam voluptate dolor, similique distinctio quibusdam facere ratione quas molestias sequi animi, nulla modi eos quam quos adipisci? Nemo provident quam, iste quod officia aspernatur deleniti, obcaecati facere repudiandae magnam expedita sapiente! Impedit fuga ipsum minima sed ad eius nisi iure soluta sunt, voluptates placeat quasi veniam corrupti laudantium dicta a maxime libero!</h1>
+      <h2>Emoji Search</h2>
+      <input 
+        type="text" 
+        placeholder="Search emojis..." 
+        value={searchTerm} 
+        onChange={(e) => setSearchTerm(e.target.value)} 
+        className="border p-2 mb-4 w-full"
+      />
+      
+      
+      
+      <div className="flex flex-wrap gap-4 font-bold text-2xl">
+        {filteredEmojis.map((emoji) => (
+          <span 
+            key={emoji.name} 
+            title={`Go to ${emoji.name} details`}
+            onClick={() => goToEmojiDetail(emoji)}
+            className="cursor-pointer hover:bg-gray-200 p-2 rounded"
+          >
+            <p className="text-xs mb-1">{emoji.name}</p>
+            <img src={emoji.url} alt={emoji.name} width="32" height="32" />
+          </span>
+        ))}
+      </div>
     </div>
-  )
+  );
 }
 
-export default Flag
+export default Flag;

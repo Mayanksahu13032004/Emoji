@@ -1,11 +1,66 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-function AnimalNature() {
+function Smiley() {
+  const [emojis, setEmojis] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios.get('https://api.github.com/emojis')
+      .then(response => {
+        const emojisArray = Object.entries(response.data).map(([name, url]) => ({
+          name,
+          url
+        }));
+        console.log(response.data);
+        
+        setEmojis(emojisArray);
+      })
+      .catch(error => console.error(error));
+  }, []);
+
+  // Filter emojis based on search term
+  const filteredEmojis = emojis.filter(emoji => 
+    emoji.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // Function to navigate to emoji detail page
+  const goToEmojiDetail = (emoji) => {  
+    // navigate(`/EmojiDetail`);
+    navigate(`/emoji/${emoji.name}`, { state: { url: emoji.url } });
+  };
+
   return (
     <div>
-      <h1>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quasi esse accusantium quam atque deserunt, corporis soluta vero tempore tenetur aspernatur! Nobis suscipit qui est esse fugiat rerum architecto, mollitia natus sequi atque, a iste. Possimus consequuntur suscipit esse explicabo itaque et, molestias eligendi eaque ducimus, inventore facere porro illum, minus voluptate ut? Nesciunt quae doloribus amet voluptatem nam culpa voluptatum quasi accusantium dolores totam voluptas magni cumque corrupti, ex dolor rem fuga libero fugiat quos temporibus omnis ad saepe? Explicabo inventore vitae exercitationem non, atque rerum? Dicta in tempora repellendus, nobis rerum animi, consequatur sunt ipsum nemo cumque et laboriosam.</h1>
+      <h2>Emoji Search</h2>
+      <input 
+        type="text" 
+        placeholder="Search emojis..." 
+        value={searchTerm} 
+        onChange={(e) => setSearchTerm(e.target.value)} 
+        className="border p-2 mb-4 w-full"
+      />
+      
+      
+      
+      <div className="flex flex-wrap gap-4 font-bold text-2xl">
+        {filteredEmojis.map((emoji) => (
+          <span 
+            key={emoji.name} 
+            title={`Go to ${emoji.name} details`}
+            onClick={() => goToEmojiDetail(emoji)}
+            className="cursor-pointer hover:bg-gray-200 p-2 rounded"
+          >
+            <p className="text-xs mb-1">{emoji.name}</p>
+            <img src={emoji.url} alt={emoji.name} width="32" height="32" />
+          </span>
+        ))}
+      </div>
     </div>
-  )
+  );
 }
 
-export default AnimalNature
+export default Smiley;

@@ -1,12 +1,66 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function TravelPlace() {
+  const [emojis, setEmojis] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios.get('https://api.github.com/emojis')
+      .then(response => {
+        const emojisArray = Object.entries(response.data).map(([name, url]) => ({
+          name,
+          url
+        }));
+        console.log(response.data);
+        
+        setEmojis(emojisArray);
+      })
+      .catch(error => console.error(error));
+  }, []);
+
+  // Filter emojis based on search term
+  const filteredEmojis = emojis.filter(emoji => 
+    emoji.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // Function to navigate to emoji detail page
+  const goToEmojiDetail = (emoji) => {  
+    // navigate(`/EmojiDetail`);
+    navigate(`/emoji/${emoji.name}`, { state: { url: emoji.url } });
+  };
+
   return (
     <div>
-      <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima recusandae accusantium praesentium distinctio quam, quia placeat magni magnam repellendus, natus dolore ut rerum quae id error. Voluptatum quam at dolorum, tempora maxime ipsum voluptas nisi voluptates quae suscipit fuga? Sit animi esse, doloremque recusandae eos ea repellat labore corporis natus sunt totam, maiores laudantium at. Ex consequuntur ad qui inventore cumque quasi modi sit doloribus voluptatem? Eum recusandae dolore, impedit, cupiditate, animi pariatur esse necessitatibus consequuntur consequatur illum architecto cum dolorum. Suscipit, soluta reiciendis quidem provident libero pariatur magni sequi corporis, distinctio quam aspernatur consequuntur. Corrupti laborum pariatur saepe rerum!</h1>
+      <h2>Emoji Search</h2>
+      <input 
+        type="text" 
+        placeholder="Search emojis..." 
+        value={searchTerm} 
+        onChange={(e) => setSearchTerm(e.target.value)} 
+        className="border p-2 mb-4 w-full"
+      />
+      
+      
+      
+      <div className="flex flex-wrap gap-4 font-bold text-2xl">
+        {filteredEmojis.map((emoji) => (
+          <span 
+            key={emoji.name} 
+            title={`Go to ${emoji.name} details`}
+            onClick={() => goToEmojiDetail(emoji)}
+            className="cursor-pointer hover:bg-gray-200 p-2 rounded"
+          >
+            <p className="text-xs mb-1">{emoji.name}</p>
+            <img src={emoji.url} alt={emoji.name} width="32" height="32" />
+          </span>
+        ))}
+      </div>
     </div>
-  )
+  );
 }
 
-export default TravelPlace
- 
+export default TravelPlace;
