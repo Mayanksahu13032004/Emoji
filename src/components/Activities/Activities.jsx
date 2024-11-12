@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-function FoodDrink() {
+function Activities() {
   const [emojis, setEmojis] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState(null);
@@ -11,7 +11,7 @@ function FoodDrink() {
 
   useEffect(() => {
     axios
-      .get('https://emoji-api.com/categories/food-drink?access_key=298a43173d335457959e6be2a609eafbed0cb99e')
+      .get('https://emoji-api.com/categories/activities?access_key=298a43173d335457959e6be2a609eafbed0cb99e')
       .then((response) => {
         setEmojis(response.data); // Assuming API returns an array of emoji objects
       })
@@ -28,7 +28,7 @@ function FoodDrink() {
 
   // Function to navigate to emoji detail page
   const goToEmojiDetail = (emoji) => {
-    navigate(`/emoji/${emoji.slug}`, { state: { character: emoji.character } });
+    navigate(`/emoji/${emoji.slug}`, { state: { url: emoji.character } });
   };
 
   // Function to copy emoji to clipboard
@@ -67,12 +67,7 @@ function FoodDrink() {
               >
                 {emoji.character}
               </p>
-              <button
-                onClick={() => copyToClipboard(emoji.character)}
-                className="bg-blue-500 text-white px-3 py-1 mt-2 rounded hover:bg-blue-600"
-              >
-                Copy
-              </button>
+            
             </span>
           ))}
         </div>
@@ -83,4 +78,4 @@ function FoodDrink() {
   );
 }
 
-export default FoodDrink  ;
+export default Activities  ;

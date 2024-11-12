@@ -28,7 +28,7 @@ function TravelPlace() {
 
   // Function to navigate to emoji detail page
   const goToEmojiDetail = (emoji) => {
-    navigate(`/emoji/${emoji.slug}`, { state: { character: emoji.character } });
+    navigate(`/emoji/${emoji.slug}`, { state: { url: emoji.character } });
   };
 
   // Function to copy emoji to clipboard
@@ -67,12 +67,7 @@ function TravelPlace() {
               >
                 {emoji.character}
               </p>
-              <button
-                onClick={() => copyToClipboard(emoji.character)}
-                className="bg-blue-500 text-white px-3 py-1 mt-2 rounded hover:bg-blue-600"
-              >
-                Copy
-              </button>
+            
             </span>
           ))}
         </div>
