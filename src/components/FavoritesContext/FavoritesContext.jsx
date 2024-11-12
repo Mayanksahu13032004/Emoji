@@ -7,6 +7,7 @@ export function useFavorites() {
   return useContext(FavoritesContext);
 }
 
+
 export function FavoritesProvider({ children }) {
   const [favorites, setFavorites] = useState([]);
 
@@ -14,8 +15,15 @@ export function FavoritesProvider({ children }) {
     setFavorites((prevFavorites) => [...prevFavorites, emoji]);
   };
 
+const removeFromFavorites =(emojiname)=>{
+  setFavorites((prevFavorites)=>
+  prevFavorites.filter((emoji)=>emoji.name!==emojiname)
+  )
+}
+
+
   return (
-    <FavoritesContext.Provider value={{ favorites, addToFavorites }}>
+    <FavoritesContext.Provider value={{ favorites, addToFavorites ,removeFromFavorites}}>
       {children}
     </FavoritesContext.Provider>
   );
