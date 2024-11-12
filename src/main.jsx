@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 import App from './App.jsx';
 import './index.css';
-import Layout from './LAyout.jsx';
+import Layout from './Layout.jsx';
 import About from './components/About/About.jsx';
 import Flag from './components/Flag/Flag.jsx';
 import Activities from './components/Activities/Activities.jsx';
