@@ -9,28 +9,28 @@ function Flag() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('https://api.github.com/emojis')
+    axios.get('https://emoji-api.com/categories/flags?access_key=298a43173d335457959e6be2a609eafbed0cb99e')
       .then(response => {
-        const emojisArray = Object.entries(response.data).map(([name, url]) => ({
-          name,
-          url
-        }));
-        console.log(response.data);
-        
-        setEmojis(emojisArray);
+        setEmojis(response.data); // Assuming API returns an array of emoji objects
       })
       .catch(error => console.error(error));
   }, []);
 
   // Filter emojis based on search term
   const filteredEmojis = emojis.filter(emoji => 
-    emoji.name.toLowerCase().includes(searchTerm.toLowerCase())
+    emoji.slug.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   // Function to navigate to emoji detail page
   const goToEmojiDetail = (emoji) => {  
-    // navigate(`/EmojiDetail`);
-    navigate(`/emoji/${emoji.name}`, { state: { url: emoji.url } });
+    navigate(`/emoji/${emoji.slug}`, { state: { character: emoji.character } });
+  };
+
+  // Function to copy emoji to clipboard
+  const copyToClipboard = (character) => {
+    navigator.clipboard.writeText(character)
+      .then(() => alert('Emoji copied to clipboard!'))
+      .catch(err => console.error('Failed to copy emoji:', err));
   };
 
   return (
@@ -44,18 +44,26 @@ function Flag() {
         className="border p-2 mb-4 w-full"
       />
       
-      
-      
       <div className="flex flex-wrap gap-4 font-bold text-2xl">
         {filteredEmojis.map((emoji) => (
           <span 
-            key={emoji.name} 
-            title={`Go to ${emoji.name} details`}
-            onClick={() => goToEmojiDetail(emoji)}
+            key={emoji.slug} 
             className="cursor-pointer hover:bg-gray-200 p-2 rounded"
           >
-            <p className="text-xs mb-1">{emoji.name}</p>
-            <img src={emoji.url} alt={emoji.name} width="32" height="32" />
+            <p className="text-xs mb-1">{emoji.slug}</p>
+            <p 
+              onClick={() => goToEmojiDetail(emoji)} 
+              title={`Go to ${emoji.slug} details`}
+              className="cursor-pointer text-3xl"
+            >
+              {emoji.character}
+            </p>
+            <button 
+              onClick={() => copyToClipboard(emoji.character)} 
+              className="bg-blue-500 text-white p-1 mt-2 rounded"
+            >
+              Copy
+            </button>
           </span>
         ))}
       </div>
