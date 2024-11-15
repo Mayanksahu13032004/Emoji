@@ -21,18 +21,18 @@ function smiley() {
       });
   }, []);
 
-  // Filter emojis based on search term
+  
   const filteredEmojis = emojis.filter((emoji) =>
     emoji.slug.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Function to navigate to emoji detail page
+  
   const goToEmojiDetail = (emoji) => {
     navigate(`/emoji/${emoji.slug}`, { state: { url: emoji.character } });
 
   };
 
-  // Function to copy emoji to clipboard
+  
   const copyToClipboard = (character) => {
     navigator.clipboard
       .writeText(character)
@@ -41,7 +41,7 @@ function smiley() {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4">x``
       <h2 className="text-2xl font-bold mb-4">Emoji Search</h2>
       <input
         type="text"
